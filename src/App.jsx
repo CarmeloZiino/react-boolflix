@@ -5,18 +5,14 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 
 //Layout
-
 import DefaultLayout from "./layouts/DefaultLayout";
 
-
 //Context
-
-import { GlobalProvider } from "./context/GlobalContext";
 
 
 function App() {
   return (
-    <GlobalProvider>
+  
       <BrowserRouter>
         <Routes>
           <Route Component={DefaultLayout}>
@@ -24,7 +20,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
-    </GlobalProvider>
+
   );
 }
 

@@ -5,8 +5,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 // Function Header
-
-export default function Header() {
+ function Header() {
   const [search, setSearch] = useState(""); // Stato per la barra di ricerca
   const navigate = useNavigate(); // Hook per la navigazione
 
@@ -44,3 +43,5 @@ export default function Header() {
     </nav>
   );
 }
+ 
+export default Header
