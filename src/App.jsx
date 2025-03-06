@@ -1,26 +1,21 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-
-//HomePage
-
-import HomePage from "./pages/HomePage";
-
-//Layout
-import DefaultLayout from "./layouts/DefaultLayout";
-
 //Context
+import { AppProvider } from "./context/AppContext";
 
+//components
+import Header from "./components/Header";
+import Main from "./components/Main";
+import { BrowserRouter } from "react-router-dom";
 
 function App() {
   return (
-  
-      <BrowserRouter>
-        <Routes>
-          <Route Component={DefaultLayout}>
-            <Route index Component={HomePage} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-
+    <>
+      <AppProvider>
+        <BrowserRouter>
+          <Header />
+          <Main />
+        </BrowserRouter>
+      </AppProvider>
+    </>
   );
 }
 
