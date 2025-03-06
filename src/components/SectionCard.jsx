@@ -1,46 +1,87 @@
 import React from "react";
-import { AppContext } from "../context/AppContext";
+import { useAppContext } from "../context/AppContext";
 
-function SectionCard({ title, cards }) {
-  if (!cards || cards.length === 0) return null;
+function SectionCard() {
+  const { movies, series, isLoading, error } = useAppContext();
 
-  // const handleStars = (vote) => {
-  //   return Match.ceil(vote / 2);
-  // };
+  if (isLoading) {
+    return <p>Caricamento in corso...</p>;
+  }
 
-  return (
-    <section className="mb-5">
-      <h1>MOVIES</h1>
-      <h2>{title}</h2>
-      <div className="row row-cols-1 row-cols-md-3 g-4">
-        {cards.map((item, index) => (
-          <div className="col" key={index}>
-            <div
-              className=""
-              style={{
-                backgroundImage: item.poster ? `url(${item.poster})` : "none",
-                backgroundSize: "contain",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat",
-              }}
-            >
-              <div className="card-overlay">
-                <h5 className="card-title">{item.title}</h5>
-                <p>
-                  <strong>Titolo originale:</strong> {item.original_title}
-                </p>
-                <p>
-                  <strong>Lingua:</strong> {item.language || "N/A"}
-                </p>
-                <p>
-                  <strong>Voto:</strong> {handleStars(item)}
-                </p>
-              </div>
-            </div>
-          </div>
+  if (error) {
+    return <p>{error}</p>;
+  }
+
+  // Funzione per visualizzare le stelle
+  const renderStars = (vote) => {
+    const stars = Math.round((vote / 2)); 
+    return (
+      <div className="star-rating">
+        {[...Array(stars)].map((_, idStar) => (
+          <i key={idStar} className="fas fa-star"></i>
         ))}
       </div>
-    </section>
+    );
+  };
+
+  return (
+    <div className="container">
+      <h2 className="text-light">Film</h2>
+      <div className="row">
+        {movies.length === 0 ? (
+          <p>Nessun film trovato</p>
+        ) : (
+          movies.map((movie) => (
+            <div key={movie.id} className="col-md-4 mb-4">
+              <div className="card h-100">
+                <img
+                  src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                  className="card-img-top"
+                  alt={movie.title}
+                />
+                <div className="card-body d-flex flex-column">
+                  <h5 className="card-title-custom">{movie.title}</h5>
+                  <p className="card-text">
+                    {movie.original_title} <br />
+                    {/* Voto con le stelle */}
+                    {renderStars(movie.vote_average)}
+                  </p>
+                  <p className="card-text">{movie.overview}</p>
+                </div>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+
+      <h2 className="text-light">Serie TV</h2>
+      <div className="row">
+        {series.length === 0 ? (
+          <p>Nessuna serie trovata</p>
+        ) : (
+          series.map((serie) => (
+            <div key={serie.id} className="col-md-4 mb-4">
+              <div className="card h-100">
+                <img
+                  src={`https://image.tmdb.org/t/p/w500${serie.poster_path}`}
+                  className="card-img-top"
+                  alt={serie.name}
+                />
+                <div className="card-body d-flex flex-column">
+                  <h5 className="card-title-custom">{serie.name}</h5>
+                  <p className="card-text">
+                    {serie.original_name} <br />
+                    {/* Voto con le stelle */}
+                    {renderStars(serie.vote_average)}
+                  </p>
+                  <p className="card-text">{serie.overview}</p>
+                </div>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+    </div>
   );
 }
 
