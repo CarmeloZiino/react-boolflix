@@ -19,11 +19,10 @@ function Header() {
 
   return (
     <nav className="navbar navbar-expand-lg navbar-custom">
-      <div className="container">
-        <NavLink className="navbar-brand text-light" to="/">
-          BoolFlix
-        </NavLink>
-
+      <div className="container ">
+          <NavLink className="navbar-brand-custom" to="/">
+            BoolFlix
+          </NavLink>
         {/* Barra di Ricerca */}
 
         <form onSubmit={handleSubmit}>
@@ -35,7 +34,9 @@ function Header() {
             onChange={handleSearch}
           />
           <button className="btn btn-primary">Cerca</button>
-          <button className="btn btn-secondary" onClick={() => setSearch("")}>Reset</button>
+          <button className="btn btn-secondary" onClick={() => setSearch("")}>
+            Reset
+          </button>
         </form>
       </div>
     </nav>

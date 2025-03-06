@@ -1,5 +1,7 @@
 import React from "react";
 import { useAppContext } from "../context/AppContext";
+import ReactCountryFlag from 'react-country-flag';
+
 
 function SectionCard() {
   const { movies, series, isLoading, error } = useAppContext();
@@ -14,7 +16,7 @@ function SectionCard() {
 
   // Funzione per visualizzare le stelle
   const renderStars = (vote) => {
-    const stars = Math.round((vote / 2)); 
+    const stars = Math.round(vote / 2);
     return (
       <div className="star-rating">
         {[...Array(stars)].map((_, idStar) => (
@@ -25,11 +27,12 @@ function SectionCard() {
   };
 
   return (
-    <div className="container">
-      <h2 className="text-light">Film</h2>
+    <div className="container d-flex flex-column gap-5 p-4">
       <div className="row">
+        <h2 className="text-light section-custom">Film</h2>
+
         {movies.length === 0 ? (
-          <p>Nessun film trovato</p>
+          <p className="text-light h3">Nessun film trovato</p>
         ) : (
           movies.map((movie) => (
             <div key={movie.id} className="col-md-4 mb-4">
@@ -54,10 +57,10 @@ function SectionCard() {
         )}
       </div>
 
-      <h2 className="text-light">Serie TV</h2>
       <div className="row">
+        <h2 className="text-light section-custom">Serie TV</h2>
         {series.length === 0 ? (
-          <p>Nessuna serie trovata</p>
+          <p className="text-light h3">Nessuna serie trovata</p>
         ) : (
           series.map((serie) => (
             <div key={serie.id} className="col-md-4 mb-4">
