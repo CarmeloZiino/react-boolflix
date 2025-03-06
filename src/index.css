@@ -55,7 +55,16 @@ form {
   opacity: 1;
 }
 
-.card-title-custom , .card-text{
-  color: white;
-  font-size: 1.6rem;
+
+.card-title-custom{
+  font-size: 2rem;
+  color: white
+  ;
 }
+
+.card-originalTitle-custom , .card-text{
+  color: white;
+  font-size: 1.2rem;
+}
+
+

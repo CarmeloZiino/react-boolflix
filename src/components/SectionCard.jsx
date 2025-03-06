@@ -1,7 +1,6 @@
 import React from "react";
 import { useAppContext } from "../context/AppContext";
-import ReactCountryFlag from 'react-country-flag';
-
+import ReactCountryFlag from "react-country-flag";
 
 function SectionCard() {
   const { movies, series, isLoading, error } = useAppContext();
@@ -15,15 +14,32 @@ function SectionCard() {
   }
 
   // Funzione per visualizzare le stelle
-  const renderStars = (vote) => {
-    const stars = Math.round(vote / 2);
-    return (
-      <div className="star-rating">
-        {[...Array(stars)].map((_, idStar) => (
-          <i key={idStar} className="fas fa-star"></i>
-        ))}
-      </div>
-    );
+
+  function renderStars(vote) {
+    let conversion = Math.ceil(vote / 2);
+
+    let fullStar = "★";
+    let emptyStar = "☆";
+
+    let result = fullStar.repeat(conversion);
+    let result2 = emptyStar.repeat(5 - conversion);
+
+    return result + result2;
+  }
+
+  //LANGUAGE
+
+  const languageToCountryCode = {
+    en: "US",
+    es: "ES",
+    it: "IT",
+    fr: "FR",
+    de: "DE",
+    ja: "JP",
+  };
+
+  const getCountryCode = (language) => {
+    return languageToCountryCode[language] || null;
   };
 
   return (
@@ -42,13 +58,29 @@ function SectionCard() {
                   className="card-img-top"
                   alt={movie.title}
                 />
-                <div className="card-body d-flex flex-column">
+                <div className="card-body d-flex flex-column gap-4">
+                  <div>
                   <h5 className="card-title-custom">{movie.title}</h5>
-                  <p className="card-text">
-                    {movie.original_title} <br />
-                    {/* Voto con le stelle */}
-                    {renderStars(movie.vote_average)}
-                  </p>
+                  <p className="card-originalTitle-custom">
+                      {movie.title !== movie.original_title &&
+                        movie.original_title}
+                    </p>
+                  </div>
+
+
+
+                  <div>
+                    <p className="card-text d-flex align-items-center gap-2 ndrowCard">
+                      <ReactCountryFlag
+                        countryCode={getCountryCode(movie.original_language)}
+                        svg
+                        style={{ width: "35px", height: "25px" }}
+                      />
+                    </p>
+                    <p className="card-text d-flex align-items-center gap-2 ndrowCard">
+                      {renderStars(movie.vote_average)}
+                    </p>
+                  </div>
                   <p className="card-text">{movie.overview}</p>
                 </div>
               </div>
@@ -71,12 +103,27 @@ function SectionCard() {
                   alt={serie.name}
                 />
                 <div className="card-body d-flex flex-column">
+                <div>
                   <h5 className="card-title-custom">{serie.name}</h5>
-                  <p className="card-text">
-                    {serie.original_name} <br />
-                    {/* Voto con le stelle */}
-                    {renderStars(serie.vote_average)}
-                  </p>
+                  <p className="card-originalTitle-custom">
+                      {serie.name !== serie.original_title &&
+                        serie.original_title}
+                    </p>
+                  </div>                
+                  <div>
+                 
+                    <p className="card-text d-flex align-items-center gap-2 ndrowCard">
+                      <ReactCountryFlag
+                        countryCode={getCountryCode(serie.original_language)}
+                        svg
+                        style={{ width: "35px", height: "25px" }}
+                      />
+                    </p>
+                    <p className="card-text d-flex align-items-center gap-2 ndrowCard">
+                      {renderStars(serie.vote_average)}
+                    </p>
+                  </div>
+
                   <p className="card-text">{serie.overview}</p>
                 </div>
               </div>
